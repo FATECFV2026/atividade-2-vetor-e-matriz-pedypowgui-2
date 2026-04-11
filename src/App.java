@@ -1,37 +1,71 @@
-
-
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
     
     public static void main(String[] args) throws Exception {
-        // TODO: Implementar menu interativo com as seguintes opcoes:
-        // 1. Exercicio 01: Progressao Geometrica
-        // 2. Exercicio 02: Sequencia Decrescente
-        // 3. Exercicio 03: Vetor Dinamico
-        // 4. Exercicio 04: Sequencia Crescente com Soma
-        // 5. Exercicio 05: Matriz com Valores Incrementais
-        // 6. Exercicio 06: Operacao entre Matrizes
-        // 0. Sair
+        Scanner ler = new Scanner(System.in);
         
-        // Utilize o método lerValor para validação de entrada
-        // Exiba os resultados utilizando Arrays.toString() para vetores
-        // Para matrizes, utilize o método exibirMatriz()
-    }
-    
-    /**
-     * Metodo auxiliar para ler e validar entrada do usuario
-     * @param scanner Scanner para leitura
-     * @param mensagem Mensagem a ser exibida
-     * @param min Valor minimo (exclusivo)
-     * @param max Valor maximo (inclusivo)
-     * @return Valor valido lido
-     */
-    private static int lerValor(Scanner scanner, String mensagem, int min, int max) {
-        // TODO: Implementar validacao de entrada
-        // Deve repetir a leitura ate que o valor seja valido (min < valor <= max)
-        return 0; // Remover esta linha apos implementacao
+        int opc, valorInicial, soma;
+
+        int[] sequencia = new int[10];
+        int[][] somaMatrizes;
+
+        System.out.println("""
+        === BEM VINDO ===        
+        1. Progressão geométrica
+        2. Sequência decrescente
+        3. Vetor dinâmico
+        4. Sequência crescente com soma
+        5. Matriz com valores incrementais
+        6. Operação entre matrizes
+        0. Sair
+        """);
+
+        opc = ler.nextInt();
+
+        switch (opc) {
+            case 1:
+                System.out.println("Digite um número menor ou igual a 20: ");
+                valorInicial = ler.nextInt();
+                System.out.println(Arrays.toString(progressaoGeometrica(valorInicial)));
+                break;
+            case 2:
+                System.out.println("Digite um número maior que 1 e menor que 100");
+                valorInicial = ler.nextInt();
+                System.out.println(Arrays.toString(sequenciaDecrescente(valorInicial)));
+                break;
+            case 3:
+                System.out.println("Digite um número maior que 1 e menor ou igual a 1000");
+                valorInicial = ler.nextInt();
+                System.out.println(Arrays.toString(vetorDinamico(valorInicial)));
+                break;
+            case 4:
+                System.out.println("Digite um número maior que 1 e menor que 100");
+                valorInicial = ler.nextInt();
+                sequencia = sequenciaCresenteComSoma(valorInicial);
+                soma = calcularSoma(sequencia);
+                System.out.println(Arrays.toString(sequencia) + " Soma: " + soma);
+                break;
+            case 5:
+                System.out.println("Digite um número maior que 3 e menor ou igual a 50");
+                valorInicial = ler.nextInt();
+                exibirMatriz(matrizIncrementais(valorInicial));
+                break;
+            case 6:
+                System.out.println("Digite um número maior que 3 e menor ou igual a 50");
+                valorInicial = ler.nextInt();
+                System.out.println("Matriz N e Z valores: ");
+                exibirMatriz(operacaoEntreMatrizes(valorInicial)[0]);
+                System.out.println("Matriz Soma valores: ");
+                exibirMatriz(operacaoEntreMatrizes(valorInicial)[2]);
+                break;
+            default:
+                System.out.println("Opção inválida.");
+                break;
+        }   
+
+        ler.close();
     }
     
     /**
@@ -39,8 +73,12 @@ public class App {
      * @param matriz Matriz a ser exibida
      */
     private static void exibirMatriz(int[][] matriz) {
-        // TODO: Implementar exibicao da matriz
-        // Use System.out.printf("%4d ", matriz[i][j]) para formatacao
+        for(int i = 0; i < matriz.length; i++){
+            for(int j = 0; j < matriz[i].length; j++){
+                System.out.printf("%4d ", matriz[i][j]);
+            }
+            System.out.println();
+        }
     }
     
     /**
@@ -49,12 +87,18 @@ public class App {
      * @return Vetor de 10 elementos com progressao geometrica (dobro) ou null se invalido
      */
     public static int[] progressaoGeometrica(int valorInicial) {
-        // TODO: Implementar progressao geometrica
-        // Validar se valorInicial <= 20 (retornar null se invalido)
-        // Criar vetor de 10 elementos
-        // vetor[0] = valorInicial
-        // Para i=1 ate 9: vetor[i] = vetor[i-1] * 2
-        return null; // Remover esta linha apos implementacao
+        if(valorInicial > 20){
+            return null;
+        }
+
+        int[] progressao = new int[10];
+        progressao[0] = valorInicial;
+
+        for(int i = 1; i < 10; i++){
+            progressao[i] = progressao[i - 1] * 2; 
+        }
+
+        return progressao; 
     }
     
     /**
@@ -65,10 +109,18 @@ public class App {
     public static int[] sequenciaDecrescente(int valorInicial) {
         // TODO: Implementar sequencia decrescente
         // Validar se valorInicial > 1 (retornar null se invalido)
-        // Criar vetor de 10 elementos
-        // vetor[0] = valorInicial
-        // Para i=1 ate 9: vetor[i] = vetor[i-1] - 1
-        return null; // Remover esta linha apos implementacao
+        if(valorInicial <= 1 || valorInicial >= 100){
+            return null;
+        }
+
+        int[] sequencia = new int[10];
+        sequencia[0] = valorInicial;
+
+        for(int i = 1; i < sequencia.length; i++){
+            sequencia[i] = sequencia[i - 1] - 1;
+        }
+
+        return sequencia;
     }
     
     /**
@@ -77,11 +129,16 @@ public class App {
      * @return Vetor com sequencia de 1 ate tamanho ou null se invalido
      */
     public static int[] vetorDinamico(int tamanho) {
-        // TODO: Implementar vetor dinamico
-        // Validar se tamanho <= 1000 (retornar null se invalido)
-        // Criar vetor com tamanho especifico
-        // Para i=0 ate tamanho-1: vetor[i] = i + 1
-        return null; // Remover esta linha apos implementacao
+        if(tamanho > 1000 || tamanho <= 1){
+            return null;
+        }
+            
+        int[] vetor = new int[tamanho];
+
+        for(int i = 0; i < tamanho; i++){
+            vetor[i] = i + 1;
+        }
+        return vetor;
     }
     
     /**
@@ -90,11 +147,19 @@ public class App {
      * @return Vetor de 10 elementos com sequencia crescente
      */
     public static int[] sequenciaCresenteComSoma(int valorInicial) {
-        // TODO: Implementar sequencia crescente
-        // Criar vetor de 10 elementos
-        // vetor[0] = valorInicial
-        // Para i=1 ate 9: vetor[i] = vetor[i-1] + 1
-        return null; // Remover esta linha apos implementacao
+        int[] sequencia = new int[10];
+
+        if (valorInicial <= 1 || valorInicial >= 100) {
+            return null;
+        }
+
+        sequencia[0] = valorInicial;
+
+        for(int i = 1; i < sequencia.length; i++){
+            sequencia[i] = sequencia[i - 1] + 1;
+        }
+
+        return sequencia;
     }
     
     /**
@@ -103,9 +168,13 @@ public class App {
      * @return Soma de todos os elementos
      */
     public static int calcularSoma(int[] vetor) {
-        // TODO: Implementar calculo da soma
-        // Percorrer o vetor e somar todos os elementos
-        return 0; // Remover esta linha apos implementacao
+        int soma = 0;
+
+        for(int i = 0; i < vetor.length; i++){
+            soma += vetor[i];
+        }
+
+        return soma;
     }
     
     /**
@@ -114,11 +183,22 @@ public class App {
      * @return Matriz NxN com valores incrementais iniciando em tamanho+1
      */
     public static int[][] matrizIncrementais(int tamanho) {
-        // TODO: Implementar matriz com valores incrementais
-        // Criar matriz quadrada NxN
-        // Contador inicial = tamanho + 1
-        // Para cada posicao [i][j]: matriz[i][j] = contador++
-        return null; // Remover esta linha apos implementacao
+        int cont = tamanho + 1;
+
+        if(tamanho < 3 || tamanho > 50){
+            return null;
+        }
+
+        int[][] incrimental = new int[4][4];
+
+        for(int i = 0; i < incrimental.length; i++){
+            for(int j = 0; j < incrimental[i].length; j++){
+                incrimental[i][j] = cont;
+                cont++;
+            }
+        }
+
+        return incrimental;
     }
     
     /**
@@ -127,16 +207,23 @@ public class App {
      * @return Array com 3 matrizes: [0]=N, [1]=Z, [2]=Soma
      */
     public static int[][][] operacaoEntreMatrizes(int tamanho) {
-        // TODO: Implementar operacao entre matrizes
-        // Criar 3 matrizes NxN: matrizN, matrizZ, matrizSoma
-        // Contador inicial = tamanho + 1
-        // Para cada posicao [i][j]:
-        //   matrizN[i][j] = contador
-        //   matrizZ[i][j] = contador (valores iguais)
-        //   matrizSoma[i][j] = matrizN[i][j] + matrizZ[i][j]
-        //   contador++
-        // Retornar array com as 3 matrizes
-        return null; // Remover esta linha apos implementacao
+        int[][] matrizN = matrizIncrementais(tamanho);
+        int[][] matrizZ = matrizN;
+        int[][] matrizSoma = new int[tamanho][tamanho];
+
+        if(tamanho < 3 || tamanho > 50){
+            return null;
+        }
+
+        for(int i = 0; i < matrizN.length; i++){
+            for(int j = 0; j < matrizN[i].length; j++){
+                matrizSoma[i][j] = matrizN[i][j] + matrizZ[i][j];
+            }
+        }
+
+        int[][][] matrizes = {matrizN, matrizZ, matrizSoma};
+
+        return matrizes;
     }
     
     // ========================================
