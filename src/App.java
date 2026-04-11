@@ -9,7 +9,6 @@ public class App {
         int opc, valorInicial, soma;
 
         int[] sequencia = new int[10];
-        int[][] somaMatrizes;
 
         System.out.println("""
         === BEM VINDO ===        
@@ -107,8 +106,6 @@ public class App {
      * @return Vetor de 10 elementos com sequencia decrescente ou null se invalido
      */
     public static int[] sequenciaDecrescente(int valorInicial) {
-        // TODO: Implementar sequencia decrescente
-        // Validar se valorInicial > 1 (retornar null se invalido)
         if(valorInicial <= 1 || valorInicial >= 100){
             return null;
         }
